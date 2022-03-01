@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'FYFWebController_Example' do
+  pod 'FYFWebController', :path => '../'
+
+  target 'FYFWebController_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
