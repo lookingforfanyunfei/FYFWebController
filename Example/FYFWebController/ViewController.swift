@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import FYFWebController
 
 class ViewController: UIViewController {
 
+    var webViewController: FYFWebViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
