@@ -7,6 +7,10 @@
 
 import Foundation
 
-class FYFJSInvokeNativeDelegate: NSObject {
+protocol FYFJSInvokeNativeDelegate {
+    
+    /// js调用原生的协议方法
+    /// - Parameter param: 参数
+    func serverInvoke(param: Any?)
 
 }

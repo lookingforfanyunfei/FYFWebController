@@ -28,10 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14C7F737B5E75087C24D0633 /* FYFWebController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = FYFWebController.podspec; path = ../FYFWebController.podspec; sourceTree = "<group>"; };
-		18B9D8E90A74D90018C84619 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		14C7F737B5E75087C24D0633 /* FYFWebController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FYFWebController.podspec; path = ../FYFWebController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		18B9D8E90A74D90018C84619 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1B257F149395B9308C9F3C67 /* Pods-FYFWebController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Tests.debug.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Tests/Pods-FYFWebController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		263B763963AF4E83382661D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		263B763963AF4E83382661D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		4D1C3FC1C29BF8704D5439A3 /* Pods-FYFWebController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Example.release.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		5568588E1CBB4E9B1C30F922 /* Pods_FYFWebController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYFWebController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* FYFWebController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYFWebController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,7 +156,6 @@
 				1B257F149395B9308C9F3C67 /* Pods-FYFWebController_Tests.debug.xcconfig */,
 				6AEDD4F6D292694FB63D0EF1 /* Pods-FYFWebController_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -227,6 +226,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
