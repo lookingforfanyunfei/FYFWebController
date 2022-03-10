@@ -23,7 +23,7 @@ fileprivate extension String {
         
         if let dic = try? JSONSerialization.jsonObject(with: dataSelf,
                            options: .mutableContainers) as? [String : Any] {
-            result = dic!
+            result = dic
         }
         return result
     

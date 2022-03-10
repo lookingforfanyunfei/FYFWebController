@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import WebKit
+import FYFDefines
+//import FYFWebComponent
+
+fileprivate let FYFScheme = "FYF"
+fileprivate let FYFShareFunctionNo = "100001"
 
 
 /// 原生导航栏风格枚举
@@ -15,7 +21,7 @@ public enum FYFWebNativeNavBarStyle {
 }
 
 /// 导航栏封装完善的web容器
-open class FYFWebViewController: UIViewController {
+open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, UIGestureRecognizerDelegate {
     
     /// 是否使用native导航栏，默认为false，即webView自带导航栏
     public var isUserNativeNavBar: Bool = false
@@ -40,6 +46,21 @@ open class FYFWebViewController: UIViewController {
     /// 刷新按钮
     fileprivate var refreshButton: UIButton?
     
+    //MARK: - Life cycle
+    
+    deinit {
+        FYFJSBridgeManager.shareInstance.clear(jsBridge: self.jsBridge!)
+        self.webView?.removeObserver(self, forKeyPath: "estimatedProgress")
+        self.webView?.removeObserver(self, forKeyPath: "title")
+        self.webView?.removeObserver(self, forKeyPath: "canGoBack")
+        
+        NotificationCenter.default.removeObserver(self)
+    
+        self.webView?.navigationDelegate = nil
+        self.webView = nil
+        self.jsBridge = nil
+    }
+    
     /// 初始化方法
     /// - Parameter webViewUrl: url
     public init(webViewUrl: String) {
@@ -62,8 +83,38 @@ open class FYFWebViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.jsBridge = FYFJSBridgeManager.shareInstance.createBridgeForWebView(webView: self.webView!)
+        self.webView?.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
+        self.webView?.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.new, context: nil)
+        self.webView?.addObserver(self, forKeyPath: "canGoBack", options: NSKeyValueObservingOptions.new, context: nil)
+        
+        if self.isUserNativeNavBar {
+            self.title = self.navTitle
+        } else {
+            self.view.addSubview(self.navView!)
+        }
     }
     
+//    func addNavationRightItem {
+//        if self.showShareItem {
+//            let shareItem =
+//        }
+//    }
+    
+    //MARK: - WKNavigationDelegate
+    
+    //MARK: - WKUIDelegate
+    
+    //MARK: - UIGestureRecognizerDelegate
+    
+    //MARK: - Getters
+    lazy var headerView: UIView = {
+        let navView = UIView()
+        navView.backgroundColor = .white
+        navView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.height, height: CGFloat(FYFSafeArea_NavBarHeight))
+        return navView
+    }()
 }
 
 
