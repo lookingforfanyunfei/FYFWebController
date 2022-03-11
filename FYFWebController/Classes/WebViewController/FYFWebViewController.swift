@@ -7,8 +7,16 @@
 
 import UIKit
 import WebKit
-import FYFDefines
-//import FYFWebComponent
+import FYFSwfitDefines
+
+//fileprivate let FYFSafeArea_TopBarHeight: CGFloat = isNotchDevice() ? 88 : 64
+//fileprivate let FYFScreenWidth = UIScreen.main.bounds.size.width
+//fileprivate let FYFScreenHeight = UIScreen.main.bounds.size.height
+//fileprivate let FYFStatusBarHeight: CGFloat = isNotchDevice() ? 44 : 20
+//fileprivate let FYFNavigationBarHeight = getNavigationBarHeight()
+//fileprivate let FYFNavigationBarFullHeight = FYFStatusBarHeight + FYFNavigationBarHeight
+
+
 
 fileprivate let FYFScheme = "FYF"
 fileprivate let FYFShareFunctionNo = "100001"
@@ -36,13 +44,41 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     
     
     /// 当前的webView
-    fileprivate var webView: FYFWebView?
+    fileprivate lazy var webView: FYFWebView? = {
+        let webView = FYFWebView()
+        webView.holderObject = self
+        if self.isUserNativeNavBar {
+            webView.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight - FYFViewDefine.FYFNavigationBarFullHeight)
+        } else {
+            webView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight)
+        }
+        return webView
+    }()
+    
     /// 当前的jsBridge
     fileprivate var jsBridge: FYFWebViewJSBridge?
     /// 原生导航栏
-    fileprivate var navView: UIView?
+    fileprivate lazy var navView: UIView? = {
+        let navView = UIView()
+        navView.backgroundColor = .white
+        navView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenHeight, height: FYFViewDefine.FYFNavigationBarFullHeight)
+        return navView
+    }()
+    
     /// 进度条
-    fileprivate var progressView: UIProgressView?
+    fileprivate lazy var progressView: UIProgressView? = {
+        let progressView = UIProgressView()
+        if self.isUserNativeNavBar {
+            progressView.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight - 1, width: FYFViewDefine.FYFScreenWidth, height: 2)
+        } else {
+            progressView.frame = CGRect(x: 0, y: -1, width: FYFViewDefine.FYFScreenWidth, height: 2)
+        }
+        progressView.transform =  CGAffineTransform(scaleX: 1.0, y: 0.5);
+        progressView.progressTintColor =  UIColor.init(hexString: "0x00BF13")
+        
+        return progressView
+    }()
+    
     /// 刷新按钮
     fileprivate var refreshButton: UIButton?
     
@@ -94,6 +130,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         } else {
             self.view.addSubview(self.navView!)
         }
+        
     }
     
 //    func addNavationRightItem {
@@ -109,12 +146,6 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     //MARK: - UIGestureRecognizerDelegate
     
     //MARK: - Getters
-    lazy var headerView: UIView = {
-        let navView = UIView()
-        navView.backgroundColor = .white
-        navView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.height, height: CGFloat(FYFSafeArea_NavBarHeight))
-        return navView
-    }()
 }
 
 
@@ -128,5 +159,23 @@ extension FYFWebViewController {
     /// 返回上一级
     public func goBack() {
         
+    }
+}
+
+
+extension UIColor {
+    convenience init(hexString: String) {
+        let scanner:Scanner = Scanner(string:hexString)
+        var valueRGB:UInt32 = 0
+        if scanner.scanHexInt32(&valueRGB) == false {
+            self.init(red: 0,green: 0,blue: 0,alpha: 0)
+        }else{
+            self.init(
+                red:CGFloat((valueRGB & 0xFF0000)>>16)/255.0,
+                green:CGFloat((valueRGB & 0x00FF00)>>8)/255.0,
+                blue:CGFloat(valueRGB & 0x0000FF)/255.0,
+                alpha:CGFloat(1.0)
+            )
+        }
     }
 }
