@@ -17,8 +17,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.webViewController = FYFWebViewController.init(webViewUrl: "")
-        self.webViewController?.navBarStyle = .FYFWebNativeNavBarStyleDefault
+        
+//        self.webViewController = FYFWebViewController.init(webViewUrl: "")
+//        self.webViewController?.navBarStyle = .FYFWebNativeNavBarStyleDefault
     }
 
     override func didReceiveMemoryWarning() {

@@ -49,6 +49,7 @@ TODO: Add long description of the pod here.
   # s.dependency 'AFNetworking', '~> 2.3'
   
   s.dependency 'FYFSwfitDefines'
+  s.dependency 'FYFDeviceInfo'
   s.dependency 'SnapKit'
   s.dependency 'SwiftyJSON'
 end
