@@ -40,9 +40,9 @@ TODO: Add long description of the pod here.
   # 组件支持swift混编的版本
   s.swift_versions = ['5.1', '5.2','5.3', '5.4']
   
-  # s.resource_bundles = {
-  #   'FYFWebController' => ['FYFWebController/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'FYFWebController' => ['FYFWebController/Assets/*']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
