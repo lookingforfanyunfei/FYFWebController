@@ -71,13 +71,19 @@ class FYFWebViewJSBridge:NSObject, WKScriptMessageHandler {
     
     /// 预加载，默认NSURLRequestReloadIgnoringCacheData，即没缓存
     /// - Parameter urlString: 资源地址
-    func prepareLoadUrl(urlString: String) {
-        self.prepareLoadUrl(urlString: urlString, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringCacheData)
+    func prepareLoadUrl(urlString: String?) {
+        if urlString == nil {
+            return
+        }
+        self.prepareLoadUrl(urlString: urlString!, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringCacheData)
     }
     
-    func prepareLoadUrl(urlString: String, cachePolicy: NSURLRequest.CachePolicy) {
+    func prepareLoadUrl(urlString: String?, cachePolicy: NSURLRequest.CachePolicy) {
         /// 暂不支持加载本地文件
-        let webUrl = URL.init(string: urlString)
+        if urlString == nil {
+            return
+        }
+        let webUrl = URL.init(string: urlString!)
         if webUrl != nil {
             let request = URLRequest.init(url: webUrl! as URL, cachePolicy: cachePolicy, timeoutInterval: TimeInterval(KS_REQUEST_TIMEOUT_INTERVAL))
             self.webView?.load(request)

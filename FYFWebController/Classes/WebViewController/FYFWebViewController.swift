@@ -35,60 +35,64 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     public var navBarStyle: FYFWebNativeNavBarStyle = .FYFWebNativeNavBarStyleDefault
     /// webView url资源地址
     public var webViewUrl: String? {
-        set (newWebViewUrl) {
-            if newWebViewUrl == nil || (newWebViewUrl?.isEmpty != nil) {
+        set {
+            if newValue == nil {
                 return
             }
-            self.jsBridge?.prepareLoadUrl(urlString: newWebViewUrl!)
+            self.privateWebViewUrl = newValue
+            
+            self.jsBridge?.prepareLoadUrl(urlString: newValue!)
         }
         get {
-            return self.webViewUrl
+            return self.privateWebViewUrl
         }
     }
     
+    fileprivate var privateWebViewUrl: String?
     
     /// 当前的webView
-    fileprivate lazy var webView: FYFWebView? = {
-        let webView = FYFWebView()
-        webView.holderObject = self
-        if self.isUserNativeNavBar {
-            webView.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight - FYFViewDefine.FYFNavigationBarFullHeight)
-        } else {
-            webView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight)
-        }
-        webView.backgroundColor = .white
-        webView.isOpaque = false
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        webView.allowsBackForwardNavigationGestures = false
-        webView.scrollView.isScrollEnabled = true
-        webView.scrollView.bounces = false
-        
-        if #available(iOS 11.0, *) {
-            webView.scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            self.automaticallyAdjustsScrollViewInsets = false
-        }
-        
-        self.setWebViewUA(webView)
-        
-        return webView
-    }()
+    fileprivate var webView: FYFWebView?
+//    = {
+//        let webView = FYFWebView()
+//        webView.holderObject = self
+//        if self.isUserNativeNavBar {
+//            webView.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight - FYFViewDefine.FYFNavigationBarFullHeight)
+//        } else {
+//            webView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight)
+//        }
+//        webView.backgroundColor = .white
+//        webView.isOpaque = false
+//        webView.navigationDelegate = self
+//        webView.uiDelegate = self
+//        webView.allowsBackForwardNavigationGestures = false
+//        webView.scrollView.isScrollEnabled = true
+//        webView.scrollView.bounces = false
+//
+//        if #available(iOS 11.0, *) {
+//            webView.scrollView.contentInsetAdjustmentBehavior = .never
+//        } else {
+//            self.automaticallyAdjustsScrollViewInsets = false
+//        }
+//
+//        self.setWebViewUA(webView)
+//
+//        return webView
+//    }()
     
-    func setWebViewUA(_ webView: FYFWebView) {
+    func setWebViewUA(_ webView: FYFWebView?) {
         /// 此部分内容需要放到setWebUI内
         let version: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         let customUA: String = "KingStar/APP/iOS/" + version
         if #available(iOS 12.0, *) {
             /// 由于iOS2的UA改为异步，所以不管在js还是客户端第一次加载都获取不到，所以此时需要先设置好再去获取（1、如下设置，2、现在AppDelegate中设置到本地）
-            let userAgent: String = self.webView?.value(forKey: "applicationNameForUserAgent") as! String
+            let userAgent: String = webView?.value(forKey: "applicationNameForUserAgent") as! String
             let newUserAgent = userAgent + customUA
             if !newUserAgent.contains(customUA) {
-                self.webView?.setValue(newUserAgent, forKey: "applicationNameForUserAgent")
+                webView?.setValue(newUserAgent, forKey: "applicationNameForUserAgent")
             }
         }
         
-        self.webView?.evaluateJavaScript("navigator.userAgent", completionHandler: { result, error in
+        webView?.evaluateJavaScript("navigator.userAgent", completionHandler: { result, error in
             let userAgent:String = result as! String
             let nsRange = NSString(string: userAgent).range(of: customUA)
             if nsRange.location != NSNotFound {
@@ -103,9 +107,9 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
             }
             /// 不添加一下代码则只是在本地更改UA, 网页并未同步更改
             if #available(iOS 9.0, *) {
-                self.webView?.customUserAgent = newUserAgent
+                webView?.customUserAgent = newUserAgent
             } else {
-                self.webView?.setValue(newUserAgent, forKey: "applicationNameForUserAgent")
+                webView?.setValue(newUserAgent, forKey: "applicationNameForUserAgent")
             }
             //加载请求必须同步在设置UA的后面
         })
@@ -159,7 +163,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     //MARK: - Life cycle
     
     deinit {
-        FYFJSBridgeManager.shareInstance.clear(jsBridge: self.jsBridge!)
+        FYFJSBridgeManager.shareInstance.clear(jsBridge: self.jsBridge)
 //        self.webView?.removeObserver(self, forKeyPath: "estimatedProgress")
 //        self.webView?.removeObserver(self, forKeyPath: "title")
 //        self.webView?.removeObserver(self, forKeyPath: "canGoBack")
@@ -213,6 +217,8 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     open override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.createWebView()
+        
         self.jsBridge = FYFJSBridgeManager.shareInstance.createBridgeForWebView(webView: self.webView!)
 //        self.webView?.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
 //        self.webView?.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.new, context: nil)
@@ -231,13 +237,38 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         self.view.addSubview(self.progressView!)
         self.addRefreshButton()
         
-        if !self.webViewUrl!.isEmpty {
+        if self.webViewUrl != nil {
             self.jsBridge?.prepareLoadUrl(urlString: self.webViewUrl!)
         }
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeOrientation), name: UIWindow.didBecomeHiddenNotification, object: nil)
+    }
+    
+    func createWebView() {
+        self.webView = FYFWebView()
+        self.webView?.holderObject = self
+        if self.isUserNativeNavBar {
+            self.webView?.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight - FYFViewDefine.FYFNavigationBarFullHeight)
+        } else {
+            self.webView?.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight)
+        }
+        self.webView?.backgroundColor = .white
+        self.webView?.isOpaque = false
+        self.webView?.navigationDelegate = self
+        self.webView?.uiDelegate = self
+        self.webView?.allowsBackForwardNavigationGestures = false
+        self.webView?.scrollView.isScrollEnabled = true
+        self.webView?.scrollView.bounces = false
+        
+        if #available(iOS 11.0, *) {
+            self.webView?.scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+        
+        self.setWebViewUA(self.webView!)
     }
     
     //MARK: - WKNavigationDelegate

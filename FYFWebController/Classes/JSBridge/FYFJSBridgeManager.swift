@@ -66,9 +66,13 @@ class FYFJSBridgeManager {
 
     /// 清楚浏览器对象
     /// - Parameter jsBridge: jsBridge description
-    func clear(jsBridge: FYFWebViewJSBridge) {
-        self.webViewIDToJsBridgeMap.removeValue(forKey: jsBridge.webViewID)
-        jsBridge.clear()
+    func clear(jsBridge: FYFWebViewJSBridge?) {
+        if jsBridge == nil {
+            return
+        }
+        
+        self.webViewIDToJsBridgeMap.removeValue(forKey: jsBridge!.webViewID)
+        jsBridge!.clear()
     }
     
     /// 原生主动调用js
