@@ -43,7 +43,7 @@ extension FYFWebView {
         }
         
         evaluateJavaScript(script) { result, error in
-            if error != nil {
+            if error == nil {
                 if completion != nil {
                     
                     var resultObj:Any = ""

@@ -272,7 +272,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        let screenInfojs = "var h5InitData = {}; h5InitData.screen_info = " + "'" + FYFDeviceHelper.fyf_getSystemName() + "'" + ";" + "h5InitData.status_bar_padding=" + "'" + String(FYFViewDefine.FYFSysStatusBarHeight) + "'" + ";"
+        let screenInfojs = "var h5InitData = {}; h5InitData.screen_info = " + "'" + FYFDeviceHelper.fyf_getSystemName() + "'" + " ;" + "h5InitData.status_bar_padding = " + "'" + String(FYFViewDefine.FYFSysStatusBarHeight) + "'" + ";"
         self.webView?.fyf_safeAsyncEvaluateJavaScriptString(script: screenInfojs)
         
         self.navView?.isHidden = false
