@@ -33,4 +33,8 @@ open class FYFBasePlugin: FYFJSInvokeNativeDelegate {
         //交给子类实现
     }
     
+    required public init() {
+        
+    }
+    
 }

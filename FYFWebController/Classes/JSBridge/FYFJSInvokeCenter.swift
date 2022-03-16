@@ -16,7 +16,7 @@ class FYFJSInvokeCenter {
     var functionNoToPluginNameMap: Dictionary<String, String>!
     
     /// 功能号到插件对象的映射
-    var functionNoToPluginObjectMap: Dictionary<String, FYFBasePlugin>!
+    var functionNoToPluginObjectMap: Dictionary<String, FYFBasePlugin?>!
     
     /// 单例
     static let shareInstance = FYFJSInvokeCenter.init()
@@ -53,21 +53,30 @@ class FYFJSInvokeCenter {
         }
         
         var pluginName = self.functionNoToPluginNameMap[functionNo]
-        if (pluginName == nil) {
+        if pluginName == nil {
             //根据功能号和前缀拼接pluginName规则，例如：KSPLugin100000
             pluginName = FYFPluginPrefix + functionNo
             self.functionNoToPluginNameMap[pluginName!] = functionNo
         }
         
-        let pluginClass = classFromString(pluginName!) as! FYFBasePlugin.Type
-        
-//        if pluginClass == nil {
-//            var plugin = self.functionNoToPluginObjectMap[functionNo]
-//            if plugin == nil {
-////                plugin = pluginClass.in
-//                
-//            }
-//        }
+        let pluginClass:FYFBasePlugin.Type?  = classFromString(pluginName!) as? FYFBasePlugin.Type
+
+        /// 判断是否存在实例插件类型
+        if pluginClass != nil {
+            var pluginInstance = self.functionNoToPluginObjectMap[functionNo] ?? nil
+            if pluginInstance == nil {
+                pluginInstance = pluginClass!.init()
+                if pluginInstance?.isCache == true {
+                    self.functionNoToPluginObjectMap[functionNo] = pluginInstance
+                }
+            }
+
+            pluginInstance?.flowNo = (parameters as! Dictionary<String, Any>)["flowNo"] as? String
+            pluginInstance?.serverInvoke(param: parameters)
+        } else {
+            let error: String = "插件[" + pluginName! + "]对应的类不存在!"
+            print(error)
+        }
     }
     
     func classFromString(_ className: String) -> AnyClass! {
