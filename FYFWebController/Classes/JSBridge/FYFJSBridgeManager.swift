@@ -28,8 +28,11 @@ class FYFJSBridgeManager {
     /// 创建一个JSBridge对象
     /// - Parameter webView: 绑定的webView
     /// - Returns: FYFWebViewJSBridge实例
-    func createBridgeForWebView(webView: FYFWebView) -> FYFWebViewJSBridge {
-        let jsBridge = FYFWebViewJSBridge.init(webView: webView)
+    func createBridgeForWebView(webView: FYFWebView?) -> FYFWebViewJSBridge? {
+        if webView == nil {
+            return nil
+        }
+        let jsBridge = FYFWebViewJSBridge.init(webView: webView!)
         FYFJSBridgeManager.shareInstance.registor(jsBridge: jsBridge)
         return jsBridge
     }
@@ -53,15 +56,21 @@ class FYFJSBridgeManager {
     
     /// 注册浏览器对象
     /// - Parameter jsBridge: jsBridge description
-    func registor(jsBridge: FYFWebViewJSBridge) {
-        self.webViewIDToJsBridgeMap[jsBridge.webViewID] = jsBridge
-        self.currentWebViewID = jsBridge.webViewID
+    func registor(jsBridge: FYFWebViewJSBridge?) {
+        if jsBridge == nil {
+            return
+        }
+        self.webViewIDToJsBridgeMap[jsBridge!.webViewID] = jsBridge!
+        self.currentWebViewID = jsBridge!.webViewID
     }
     
     /// 卸载浏览器对象
     /// - Parameter jsBridge: jsBridge description
-    func unregistor(jsBridge: FYFWebViewJSBridge) {
-        self.webViewIDToJsBridgeMap.removeValue(forKey: jsBridge.webViewID)
+    func unregistor(jsBridge: FYFWebViewJSBridge?) {
+        if jsBridge == nil {
+            return
+        }
+        self.webViewIDToJsBridgeMap.removeValue(forKey: jsBridge!.webViewID)
     }
 
     /// 清楚浏览器对象

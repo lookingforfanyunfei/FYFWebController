@@ -52,33 +52,9 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     
     /// 当前的webView
     fileprivate var webView: FYFWebView?
-//    = {
-//        let webView = FYFWebView()
-//        webView.holderObject = self
-//        if self.isUserNativeNavBar {
-//            webView.frame = CGRect(x: 0, y: FYFViewDefine.FYFNavigationBarFullHeight, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight - FYFViewDefine.FYFNavigationBarFullHeight)
-//        } else {
-//            webView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFScreenHeight)
-//        }
-//        webView.backgroundColor = .white
-//        webView.isOpaque = false
-//        webView.navigationDelegate = self
-//        webView.uiDelegate = self
-//        webView.allowsBackForwardNavigationGestures = false
-//        webView.scrollView.isScrollEnabled = true
-//        webView.scrollView.bounces = false
-//
-//        if #available(iOS 11.0, *) {
-//            webView.scrollView.contentInsetAdjustmentBehavior = .never
-//        } else {
-//            self.automaticallyAdjustsScrollViewInsets = false
-//        }
-//
-//        self.setWebViewUA(webView)
-//
-//        return webView
-//    }()
     
+    /// 设置UserAgent
+    /// - Parameter webView: <#webView description#>
     func setWebViewUA(_ webView: FYFWebView?) {
         /// 此部分内容需要放到setWebUI内
         let version: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -211,7 +187,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         }
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17)]
         
-        FYFJSBridgeManager.shareInstance.registor(jsBridge: self.jsBridge!)
+        FYFJSBridgeManager.shareInstance.registor(jsBridge: self.jsBridge)
     }
 
     open override func viewDidLoad() {
@@ -219,7 +195,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         
         self.createWebView()
         
-        self.jsBridge = FYFJSBridgeManager.shareInstance.createBridgeForWebView(webView: self.webView!)
+        self.jsBridge = FYFJSBridgeManager.shareInstance.createBridgeForWebView(webView: self.webView)
 //        self.webView?.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
 //        self.webView?.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.new, context: nil)
 //        self.webView?.addObserver(self, forKeyPath: "canGoBack", options: NSKeyValueObservingOptions.new, context: nil)
@@ -385,7 +361,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     
     //MARK: - UIGestureRecognizerDelegate
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if ((self.webView?.canGoBack) != nil) {
+        if self.webView?.canGoBack == true {
             return false
         }
         return true
@@ -402,7 +378,12 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     }
     
     @objc func refreshClick() {
-        if (self.webView?.url?.absoluteString.count)! > 0 {
+        let stringCount = self.webView?.url?.absoluteString.count
+        
+        if stringCount == nil {
+            return
+        }
+        if stringCount! > 0 {
             self.webView?.reload()
         }
     }
@@ -414,7 +395,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         backButton.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: FYFViewDefine.FYFNavigationBarHeight)
         leftView.addSubview(backButton)
         var leftViewW = 32.0
-        if self.webView?.canGoBack != nil {
+        if self.webView?.canGoBack == true {
             let closeButton: UIButton = self.createButtonWithImageOffset(offset: -2.0, imageName: "fyf_web_close_icon", selector: #selector(closeCurrentWebView))
             closeButton.frame = CGRect(x: 28.0, y: 0.0, width: 32.0, height: FYFViewDefine.FYFNavigationBarHeight)
             leftView.addSubview(closeButton)
@@ -501,7 +482,8 @@ extension FYFWebViewController {
     
     /// 返回上一级
     @objc public func goBack() {
-        if !self.webView!.canGoBack || ((self.webView?.backForwardList.backList.count)! > 0) {
+        let backListCount = self.webView?.backForwardList.backList.count ?? 0
+        if self.webView?.canGoBack == true || backListCount > 0 {
             /// 单一个 canGoBack不准确
             self.webView?.goBack()
         } else {
