@@ -98,6 +98,13 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         let navView = UIView()
         navView.backgroundColor = .white
         navView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenHeight, height: FYFViewDefine.FYFNavigationBarFullHeight)
+        
+        let backButton = UIButton()
+        backButton.frame = CGRect(x: 0, y: FYFViewDefine.FYFSysStatusBarHeight, width: 40, height: FYFViewDefine.FYFNavigationBarHeight)
+        backButton.setImage(FYFUIImage.webImageNamed("fyf_appicon_navback"), for: .normal)
+        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        
+        navView.addSubview(backButton)
         return navView
     }()
     
@@ -118,8 +125,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     /// 刷新按钮
     fileprivate lazy var refreshButton: UIButton? = {
         let refreshButton = UIButton()
-        refreshButton.setTitle("刷新", for: .normal)
-        refreshButton.backgroundColor = .red
+        refreshButton.setImage(FYFUIImage.webImageNamed("fyf_web_refresh_icon"), for: .normal)
         refreshButton.addTarget(self, action: #selector(refreshClick), for: .touchUpInside)
         self.view.addSubview(refreshButton)
         
@@ -372,6 +378,15 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
 //    func observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context;
     
     //MARK: - Private
+    
+    @objc func close() {
+        if self.navigationController?.viewControllers.count == 1 {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     @objc func shareClick() {
         /// 主动调用js获取分享信息，然后在js回调结果中唤起分享组件
         FYFJSBridgeManager.shareInstance.iosTriggerJS(functionNo: FYFShareFunctionNo, param: nil)
@@ -410,7 +425,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     func addNavigationRightItem() {
         if self.showShareItem {
             let shareItem: UIBarButtonItem = UIBarButtonItem()
-//            shareItem.image =
+            shareItem.image = FYFUIImage.webImageNamed("fyf_web_share_icon")
             shareItem.style = UIBarButtonItem.Style.plain
             shareItem.target = self
             shareItem.action = #selector(shareClick)
@@ -456,8 +471,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     func createButtonWithImageOffset(offset: CGFloat, imageName: String, selector: Selector) -> UIButton {
         let button:UIButton = UIButton()
         button.imageEdgeInsets = UIEdgeInsets.init(top: 0.0, left: offset, bottom: 0.0, right: 0.0)
-        button.backgroundColor = UIColor.white
-//        button.setImage(<#T##UIImage?#>, for: <#T##UIControl.State#>)
+        button.setImage(FYFUIImage.webImageNamed(imageName), for: .normal)
         button.addTarget(self, action: selector, for: UIControl.Event.touchUpInside)
         return button
     }

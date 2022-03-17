@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         
 //        self.webViewController = FYFWebViewController.init(webViewUrl: "")
 //        self.webViewController?.navBarStyle = .FYFWebNativeNavBarStyleDefault
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +44,7 @@ class ViewController: UIViewController {
         let webVC: FYFWebViewController = FYFWebViewController.init(webViewUrl: "https://luna.gtjaqh.com/news-static/html/2021/0825/af7c33e841a0e3bc02cabf66b590e2e5.html")
 //        let webVC: FYFWebViewController = FYFWebViewController.init(webViewUrl: "https://www.baidu.com/")
         webVC.isUserNativeNavBar = true
-        webVC.showShareItem = true
+        webVC.showShareItem = false
         self.navigationController?.pushViewController(webVC, animated: true)
     }
 }

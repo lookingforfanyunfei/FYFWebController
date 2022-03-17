@@ -59,7 +59,7 @@ class FYFJSInvokeCenter {
             self.functionNoToPluginNameMap[pluginName!] = functionNo
         }
         
-        let pluginClass:FYFBasePlugin.Type?  = classFromString(pluginName!) as? FYFBasePlugin.Type
+        let pluginClass:FYFBasePlugin.Type?  = FYFCommonUtil.getClassFromString(pluginName!) as? FYFBasePlugin.Type
 
         /// 判断是否存在实例插件类型
         if pluginClass != nil {
@@ -77,17 +77,5 @@ class FYFJSInvokeCenter {
             let error: String = "插件[" + pluginName! + "]对应的类不存在!"
             print(error)
         }
-    }
-    
-    func classFromString(_ className: String) -> AnyClass! {
-
-        /// get namespace
-        let namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-
-        /// get 'anyClass' with classname and namespace
-        let cls: AnyClass = NSClassFromString("\(namespace).\(className)")!
-
-        // return AnyClass!
-        return cls
     }
 }
