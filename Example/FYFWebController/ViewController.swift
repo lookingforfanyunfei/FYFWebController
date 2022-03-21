@@ -32,6 +32,22 @@ class ViewController: UIViewController {
 //        self.webViewController = FYFWebViewController.init(webViewUrl: "")
 //        self.webViewController?.navBarStyle = .FYFWebNativeNavBarStyleDefault
         
+//        let pluginClass:AnyClass? = NSClassFromString("ViewController")
+
+        print(self)
+        print(ViewController.self)
+        print(ViewController.Type.self)
+        
+        let vc: ViewController.Type = ViewController.self
+        print(vc)
+        
+        let intMetaType: Int.Type = Int.self
+        print(intMetaType)
+        
+        let  instanceMetaType = type(of: "string")
+        let staticMetaType = String.self
+        print(instanceMetaType, staticMetaType)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,7 +60,7 @@ class ViewController: UIViewController {
         let webVC: FYFWebViewController = FYFWebViewController.init(webViewUrl: "https://luna.gtjaqh.com/news-static/html/2021/0825/af7c33e841a0e3bc02cabf66b590e2e5.html")
 //        let webVC: FYFWebViewController = FYFWebViewController.init(webViewUrl: "https://www.baidu.com/")
         webVC.isUserNativeNavBar = true
-        webVC.showShareItem = false
+        webVC.showShareItem = true
         self.navigationController?.pushViewController(webVC, animated: true)
     }
 }
