@@ -58,7 +58,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     func setWebViewUA(_ webView: FYFWebView?) {
         /// 此部分内容需要放到setWebUI内
         let version: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-        let customUA: String = "GTJAQH/APP/iOS/" + version
+        let customUA: String = "KingStar/APP/iOS/" + version
         if #available(iOS 12.0, *) {
             /// 由于iOS2的UA改为异步，所以不管在js还是客户端第一次加载都获取不到，所以此时需要先设置好再去获取（1、如下设置，2、现在AppDelegate中设置到本地）
             let userAgent: String = webView?.value(forKey: "applicationNameForUserAgent") as! String
