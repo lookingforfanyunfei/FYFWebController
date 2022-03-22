@@ -49,9 +49,14 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     }
     
     fileprivate var privateWebViewUrl: String?
-    
+    /// webView estimatedProgress kvo
+    fileprivate var progressObervation: NSKeyValueObservation?
+    /// webView title kvo
+    fileprivate var titleObervation: NSKeyValueObservation?
+    /// webView canGoBack kvo
+    fileprivate var canGoBackObervation: NSKeyValueObservation?
     /// 当前的webView
-    fileprivate var webView: FYFWebView?
+    @objc fileprivate var webView: FYFWebView?
     
     /// 设置UserAgent
     /// - Parameter webView: <#webView description#>
@@ -150,11 +155,21 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
 //        self.webView?.removeObserver(self, forKeyPath: "title")
 //        self.webView?.removeObserver(self, forKeyPath: "canGoBack")
         
+        self.destroyObserver()
+        
         NotificationCenter.default.removeObserver(self)
     
         self.webView?.navigationDelegate = nil
         self.webView = nil
         self.jsBridge = nil
+    }
+    
+    func destroyObserver() {
+        self.progressObervation?.invalidate()
+        self.progressObervation = nil
+        
+        self.titleObervation?.invalidate()
+        self.titleObervation = nil
     }
     
     /// 初始化方法
@@ -202,9 +217,8 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         self.createWebView()
         
         self.jsBridge = FYFJSBridgeManager.shareInstance.createBridgeForWebView(webView: self.webView)
-//        self.webView?.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
-//        self.webView?.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.new, context: nil)
-//        self.webView?.addObserver(self, forKeyPath: "canGoBack", options: NSKeyValueObservingOptions.new, context: nil)
+
+        self.setupObserver()
         
         if self.isUserNativeNavBar {
             self.title = self.navTitle
@@ -226,11 +240,6 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeOrientation), name: UIWindow.didBecomeHiddenNotification, object: nil)
-        
-        let pluginClass: FYFBasePlugin.Type? = NSClassFromString("FYFBasePlugin") as? FYFBasePlugin.Type
-        
-        print(pluginClass)
-        
     }
     
     func createWebView() {
@@ -256,6 +265,54 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         }
         
         self.setWebViewUA(self.webView!)
+    }
+    
+    //MARK: - KVO
+    func setupObserver() {
+        self.progressObervation = observe(\.self.webView?.estimatedProgress, options: [.old, .new], changeHandler: { (self, change) in
+            let newValue = change.newValue ?? 0
+            let oldValue = change.oldValue ?? 0
+            print("progress newValue:\(newValue ?? 0.0), oldValue:\(oldValue ?? 0.0)")
+            
+            weak var weakSelf = self
+            
+            weakSelf?.progressView?.alpha = 1.0
+            weakSelf?.progressView?.setProgress(Float(newValue ?? 0.0), animated: true)
+            if (weakSelf?.progressView?.progress ?? 0) >= 1 {
+                UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseOut) {
+                    weakSelf?.progressView?.alpha = 0.0
+                } completion: { finished in
+                    weakSelf?.progressView?.isHidden = true
+                    weakSelf?.progressView?.setProgress(0.0, animated: false)
+                }
+            }
+        })
+        
+        self.titleObervation = observe(\.self.webView?.title, options: [.old, .new], changeHandler: { (self, change) in
+            let newValue = change.newValue
+            let oldValue = change.oldValue
+            print("title newValue:\(String(describing: newValue ?? "")), oldValue:\(String(describing: oldValue ?? ""))")
+            
+            weak var weakSelf = self
+            
+            let isNavTitleEmpty: Bool = weakSelf?.navTitle?.isEmpty ?? false
+            let isWebViewUrlEmpty: Bool = weakSelf?.webViewUrl?.isEmpty ?? false
+            let isWebViewAbsoluteStringContainsWebViewUrl: Bool = weakSelf?.webView?.url?.absoluteString.contains(weakSelf?.webViewUrl ?? "") ?? false
+            if !isNavTitleEmpty && !isWebViewUrlEmpty && !isWebViewAbsoluteStringContainsWebViewUrl {
+                weakSelf?.navigationItem.title = weakSelf?.navTitle
+                return
+            }
+            weakSelf?.navigationItem.title = weakSelf?.webView?.title
+        })
+        
+        self.canGoBackObervation = observe(\.self.webView?.canGoBack, options: [.old, .new], changeHandler: { (self, change) in
+            let newValue = change.newValue
+            let oldValue = change.oldValue
+            print("canGoBack newValue:\(String(describing: newValue ?? false)), oldValue:\(String(describing: oldValue ?? false))")
+            
+            weak var weakSelf = self
+            weakSelf?.addNavigationLeftItem()
+        })
     }
     
     //MARK: - WKNavigationDelegate
