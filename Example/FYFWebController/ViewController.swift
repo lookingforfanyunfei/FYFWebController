@@ -8,6 +8,8 @@
 
 import UIKit
 import FYFWebController
+import SnapKit
+
 
 class ViewController: UIViewController {
 
@@ -34,19 +36,19 @@ class ViewController: UIViewController {
         
 //        let pluginClass:AnyClass? = NSClassFromString("ViewController")
 
-        print(self)
-        print(ViewController.self)
-        print(ViewController.Type.self)
-        
-        let vc: ViewController.Type = ViewController.self
-        print(vc)
-        
-        let intMetaType: Int.Type = Int.self
-        print(intMetaType)
-        
-        let  instanceMetaType = type(of: "string")
-        let staticMetaType = String.self
-        print(instanceMetaType, staticMetaType)
+//        print(self)
+//        print(ViewController.self)
+//        print(ViewController.Type.self)
+//
+//        let vc: ViewController.Type = ViewController.self
+//        print(vc)
+//
+//        let intMetaType: Int.Type = Int.self
+//        print(intMetaType)
+//
+//        let  instanceMetaType = type(of: "string")
+//        let staticMetaType = String.self
+//        print(instanceMetaType, staticMetaType)
         
     }
 

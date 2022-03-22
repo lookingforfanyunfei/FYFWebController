@@ -7,22 +7,6 @@
 
 import UIKit
 
-class FYFCommonUtil {
-    
-    class func getClassFromString(_ className: String) -> AnyClass! {
-        /// get namespace
-//        let namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        let namespace = "FYFWebController"
-        
-        /// get 'anyClass' with classname and namespace
-        let cls: AnyClass? = NSClassFromString("\(namespace).\(className)") ?? nil
-        
-        // return AnyClass!
-        return cls
-    }
-}
-
-
 // MARK: 字符串转字典
 extension String {
     

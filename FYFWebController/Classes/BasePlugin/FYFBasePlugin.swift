@@ -7,7 +7,8 @@
 
 import Foundation
 
-open class FYFBasePlugin: FYFJSInvokeNativeDelegate {
+@objc(FYFBasePlugin)
+open class FYFBasePlugin: NSObject, FYFJSInvokeNativeDelegate {
     
     /// 是否需要缓存插件，默认为true
     var isCache:Bool = true
@@ -33,7 +34,7 @@ open class FYFBasePlugin: FYFJSInvokeNativeDelegate {
         //交给子类实现
     }
     
-    required public init() {
+    required public override init() {
         
     }
     

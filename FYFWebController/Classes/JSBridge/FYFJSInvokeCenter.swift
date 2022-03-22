@@ -59,7 +59,7 @@ class FYFJSInvokeCenter {
             self.functionNoToPluginNameMap[pluginName!] = functionNo
         }
     
-        let pluginClass:FYFBasePlugin.Type? = FYFCommonUtil.getClassFromString(pluginName!) as? FYFBasePlugin.Type
+        let pluginClass:FYFBasePlugin.Type? = NSClassFromString(pluginName!) as? FYFBasePlugin.Type
         
         /// 判断是否存在实例插件类型
         if pluginClass != nil {

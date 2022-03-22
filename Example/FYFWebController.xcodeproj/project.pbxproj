@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2746ECD4903F8A77BA51F1A4 /* libPods-FYFWebController_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DEFA981BD62AF4A9DD64B7 /* libPods-FYFWebController_Tests.a */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		780308406705605581A94D4D /* Pods_FYFWebController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 300DF28B56020478A93423FE /* Pods_FYFWebController_Tests.framework */; };
-		F4D2E6C8C3BD9AF10C23BD47 /* Pods_FYFWebController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBD3B8A6DCEB7CE2DDFC533 /* Pods_FYFWebController_Example.framework */; };
+		8FFAF9F73628E200E5A1F44F /* libPods-FYFWebController_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD43B226BDFF344A89F7FD83 /* libPods-FYFWebController_Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +31,6 @@
 		14C7F737B5E75087C24D0633 /* FYFWebController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FYFWebController.podspec; path = ../FYFWebController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		18B9D8E90A74D90018C84619 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		263B763963AF4E83382661D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		300DF28B56020478A93423FE /* Pods_FYFWebController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYFWebController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F84A63CA9C4C5A51AD7719F /* Pods-FYFWebController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Example.debug.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4507A5E83485A040E2BB839A /* Pods-FYFWebController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Tests.debug.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Tests/Pods-FYFWebController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		48A858EBFBFC9624BD26F3AE /* Pods-FYFWebController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Tests.release.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Tests/Pods-FYFWebController_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -46,7 +45,8 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		9E78D6254F51E9F07EB82758 /* Pods-FYFWebController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYFWebController_Example.release.xcconfig"; path = "Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BEBD3B8A6DCEB7CE2DDFC533 /* Pods_FYFWebController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYFWebController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD43B226BDFF344A89F7FD83 /* libPods-FYFWebController_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FYFWebController_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0DEFA981BD62AF4A9DD64B7 /* libPods-FYFWebController_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FYFWebController_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4D2E6C8C3BD9AF10C23BD47 /* Pods_FYFWebController_Example.framework in Frameworks */,
+				8FFAF9F73628E200E5A1F44F /* libPods-FYFWebController_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				780308406705605581A94D4D /* Pods_FYFWebController_Tests.framework in Frameworks */,
+				2746ECD4903F8A77BA51F1A4 /* libPods-FYFWebController_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,8 +72,8 @@
 		53DDCA708A46E1488FCFCA38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BEBD3B8A6DCEB7CE2DDFC533 /* Pods_FYFWebController_Example.framework */,
-				300DF28B56020478A93423FE /* Pods_FYFWebController_Tests.framework */,
+				DD43B226BDFF344A89F7FD83 /* libPods-FYFWebController_Example.a */,
+				F0DEFA981BD62AF4A9DD64B7 /* libPods-FYFWebController_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,7 +170,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				6E0AF98F2F363332917BFA4B /* [CP] Embed Pods Frameworks */,
+				464E70EE347B09E95C76E40F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -284,30 +284,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6E0AF98F2F363332917BFA4B /* [CP] Embed Pods Frameworks */ = {
+		464E70EE347B09E95C76E40F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FYFDeviceInfo/FYFDeviceInfo.framework",
-				"${BUILT_PRODUCTS_DIR}/FYFSwfitDefines/FYFSwfitDefines.framework",
-				"${BUILT_PRODUCTS_DIR}/FYFWebController/FYFWebController.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FYFWebController/FYFWebController.bundle",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FYFDeviceInfo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FYFSwfitDefines.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FYFWebController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FYFWebController.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYFWebController_Example/Pods-FYFWebController_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F13D6F45B83B3A94BE1FCE4 /* [CP] Check Pods Manifest.lock */ = {

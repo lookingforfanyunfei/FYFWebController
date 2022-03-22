@@ -226,6 +226,11 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeOrientation), name: UIWindow.didBecomeHiddenNotification, object: nil)
+        
+        let pluginClass: FYFBasePlugin.Type? = NSClassFromString("FYFBasePlugin") as? FYFBasePlugin.Type
+        
+        print(pluginClass)
+        
     }
     
     func createWebView() {
