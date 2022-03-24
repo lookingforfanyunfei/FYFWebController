@@ -102,7 +102,7 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     fileprivate lazy var navView: UIView? = {
         let navView = UIView()
         navView.backgroundColor = .white
-        navView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenHeight, height: FYFViewDefine.FYFNavigationBarFullHeight)
+        navView.frame = CGRect(x: 0, y: 0, width: FYFViewDefine.FYFScreenWidth, height: FYFViewDefine.FYFNavigationBarFullHeight)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: 0, y: FYFViewDefine.FYFSysStatusBarHeight, width: 40, height: FYFViewDefine.FYFNavigationBarHeight)
