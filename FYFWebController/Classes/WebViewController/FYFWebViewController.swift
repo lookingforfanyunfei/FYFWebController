@@ -151,9 +151,6 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
     
     deinit {
         FYFJSBridgeManager.shareInstance.clear(jsBridge: self.jsBridge)
-//        self.webView?.removeObserver(self, forKeyPath: "estimatedProgress")
-//        self.webView?.removeObserver(self, forKeyPath: "title")
-//        self.webView?.removeObserver(self, forKeyPath: "canGoBack")
         
         self.destroyObserver()
         
@@ -434,10 +431,6 @@ open class FYFWebViewController: UIViewController, WKNavigationDelegate, WKUIDel
         }
         return true
     }
-    
-    //MARK: - KVO Progress
-    
-//    func observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context;
     
     //MARK: - Actions
     
