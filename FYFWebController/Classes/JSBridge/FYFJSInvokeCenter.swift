@@ -65,7 +65,7 @@ class FYFJSInvokeCenter {
         if pluginClass != nil {
             var pluginInstance = self.functionNoToPluginObjectMap[functionNo] ?? nil
             if pluginInstance == nil {
-                pluginInstance = pluginClass!.init()
+                pluginInstance = pluginClass?.init()
                 if pluginInstance?.isCache == true {
                     self.functionNoToPluginObjectMap[functionNo] = pluginInstance
                 }
