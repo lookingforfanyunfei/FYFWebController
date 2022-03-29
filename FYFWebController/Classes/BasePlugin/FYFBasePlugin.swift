@@ -11,15 +11,15 @@ import Foundation
 open class FYFBasePlugin: NSObject, FYFJSInvokeNativeDelegate {
     
     /// 是否需要缓存插件，默认为true
-    public var isCache:Bool = true
+    open var isCache:Bool = true
     /// 请求流水号
-    public var flowNo: String?
+    open var flowNo: String?
     
     /// 原生回调js
     /// - Parameters:
     ///   - flowNo: 流水号
     ///   - param: 参数
-    public func iosCallbackJSFlowNo(flowNo: String, param: Any?) {
+    open func iosCallbackJSFlowNo(flowNo: String, param: Any?) {
         DispatchQueue.main.async {
             let jsBridge = FYFJSBridgeManager.shareInstance.currentJsBridge()
             if jsBridge != nil {
@@ -29,8 +29,8 @@ open class FYFBasePlugin: NSObject, FYFJSInvokeNativeDelegate {
     }
     
     
-    //MARK: - KSJSInvokeNativeDelegate
-    func serverInvoke(param: Any?) {
+    //MARK: - FYFJSInvokeNativeDelegate
+    open func serverInvoke(param: Any?) {
         //交给子类实现
     }
     
