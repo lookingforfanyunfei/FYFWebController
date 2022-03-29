@@ -7,6 +7,10 @@
 
 import Foundation
 
+/*
+  由于要跨模块通信，KSBasePlugin的子类要加 @objc(子类插件)关键字标记
+ */
+
 @objc(FYFBasePlugin)
 open class FYFBasePlugin: NSObject, FYFJSInvokeNativeDelegate {
     
