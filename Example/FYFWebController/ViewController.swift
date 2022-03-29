@@ -30,26 +30,6 @@ class ViewController: UIViewController {
             make.size.equalTo(CGSize(width: 80, height: 30))
         }
         
-        
-//        self.webViewController = FYFWebViewController.init(webViewUrl: "")
-//        self.webViewController?.navBarStyle = .FYFWebNativeNavBarStyleDefault
-        
-//        let pluginClass:AnyClass? = NSClassFromString("ViewController")
-
-//        print(self)
-//        print(ViewController.self)
-//        print(ViewController.Type.self)
-//
-//        let vc: ViewController.Type = ViewController.self
-//        print(vc)
-//
-//        let intMetaType: Int.Type = Int.self
-//        print(intMetaType)
-//
-//        let  instanceMetaType = type(of: "string")
-//        let staticMetaType = String.self
-//        print(instanceMetaType, staticMetaType)
-        
     }
 
     override func didReceiveMemoryWarning() {
