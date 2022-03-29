@@ -8,7 +8,7 @@
 import Foundation
 
 /*
-  由于要跨模块通信，KSBasePlugin的子类要加 @objc(子类插件)关键字标记
+ 由于要跨模块通信,需要用到运行时动态获取业务插件类，所以KSBasePlugin的子类要加 @objc(子类插件)关键字标记
  */
 
 @objc(FYFBasePlugin)
